@@ -17,11 +17,19 @@ const autenticacion = auth({
 const app = express();
 app.use(express.json());
 
+// >>>>>> Aqui importo la coneccion DB <<<<<<
+const connectDB = require("./db/connect");
+connectDB();
+
 // Importamos el Router de Libros
 const librosRouter = require("./routes/libros");
 
 //Configuramos el middleware de autenticacion
 app.use("/api/libros", autenticacion,  librosRouter);
+
+// >>>>>> Aqui importo el Router de Usuario <<<<<<
+const usuarioRouter = require("./routes/usuarios"); 
+app.use("/api/usuarios", usuarioRouter);
 
 app.use(errorHandler);
 
