@@ -3,10 +3,13 @@ const router = express.Router();
 
 const { getAllUsuarios, getUsuariosById, createUsuario, updateUsuario, deleteUsuario } = require("../controllers/usuarioController");
 
-router.get("/", getAllUsuarios);
-router.get("/:id", getUsuariosById);
-router.post("/", createUsuario);
-router.put("/:id", updateUsuario);
-router.delete("/:id", deleteUsuario);
+// Importamos la libreria para validar scopes
+const { requiredScopes } = require("express-oauth2-jwt-bearer");
+
+router.get("/", requiredScopes("read:usuarios"), getAllUsuarios);
+router.get("/:id", requiredScopes("read:usuarios"), getUsuariosById);
+router.post("/", requiredScopes("write:usuarios"), createUsuario);
+router.put("/:id", requiredScopes("write:usuarios"), updateUsuario);
+router.delete("/:id", requiredScopes("write:usuarios"), deleteUsuario);
 
 module.exports = router;

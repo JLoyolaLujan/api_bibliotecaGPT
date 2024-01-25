@@ -29,7 +29,7 @@ app.use("/api/libros", autenticacion,  librosRouter);
 
 // >>>>>> Aqui importo el Router de Usuario <<<<<<
 const usuarioRouter = require("./routes/usuarios"); 
-app.use("/api/usuarios", usuarioRouter);
+app.use("/api/usuarios", autenticacion, usuarioRouter);
 
 app.use(errorHandler);
 
